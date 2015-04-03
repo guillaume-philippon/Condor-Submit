@@ -49,8 +49,8 @@ def classad_creator(arguments, directory):
     """
     job_classad = classad.ClassAd()
     job_classad["CMD"] = arguments.script
-    job_classad["UserLog"] = "{0}/{1}.log".format(directory, arguments.script)
-    job_classad["Out"] = "{0}/{1}.out".format(directory, arguments.script)
+    job_classad["UserLog"] = "{0}/{1}.log".format(directory, get_basename(arguments.script))
+    job_classad["Out"] = "{0}/{1}.out".format(directory, get_basename(arguments.script))
     if arguments.arguments is not None:
         job_classad["Arguments"] = arguments.arguments
     if arguments.group is not None:
@@ -76,6 +76,15 @@ def get_username():
     return getpass.getuser()
 
 
+def get_basename(script):
+    """
+    Return basename of the script
+    :param script: string
+    :return: string
+    """
+    return os.path.basename(script)
+
+
 def check_group(group):
     """
     check if user is in group requested. If group not exist, return False
@@ -98,7 +107,7 @@ def prepare_job_execution(job_name):
     :return: string
     """
     directory_suffix = time.time()
-    directory_name = "{0}.{1}".format(job_name, directory_suffix)
+    directory_name = "{0}.{1}".format(get_basename(job_name), directory_suffix)
     os.mkdir(directory_name)
     return directory_name
 
