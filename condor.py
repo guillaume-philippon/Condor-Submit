@@ -98,7 +98,7 @@ def prepare_job_execution(job_name):
     :return: string
     """
     directory_suffix = time.time()
-    directory_name = "{0}.{1}".format(job_name, directory_suffix)
+    directory_name = "{0}.{1}".format(os.path.basename(job_name), directory_suffix)
     os.mkdir(directory_name)
     return directory_name
 
