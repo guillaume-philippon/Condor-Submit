@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # pylint: disable=no-member
 """
-condor.py is a python script to improve user experience with HTCondor batch scheduler
+csub is a python script to improve user experience with HTCondor batch scheduler
 """
 import argparse
 import getpass
