@@ -36,6 +36,10 @@ def command_parser():
     parser.add_argument('--machine', dest='machine',
                         help='Define a specific machine you want use (should be'
                              ' the full hostname of the machine)')
+    parser.add_argument('--input', dest='input_files',
+                        help='A list of input file')
+    parser.add_argument('--output', dest='output_files',
+                        help='A list of output file')
     parser.add_argument('--cpus', dest='cpus', help='Number of CPUs you need')
     return parser.parse_args()
 
@@ -65,6 +69,10 @@ def classad_creator(arguments, directory):
     if arguments.machine is not None:
         job_classad["Requirements"] = classad.ExprTree("(Machine =="
                                                        " \"{0}\")".format(arguments.machine))
+    if arguments.input_files is not None:
+        job_classad["TransferInput"] = arguments.input_files
+    if arguments.output_files is not None:
+        job_classad["TransferOutput"] = arguments.output_files
     return job_classad
 
 
