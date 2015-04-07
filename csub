@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf8 -*-it
+# -*- coding: utf8 -*-fr
 # pylint: disable=no-member
 """
 csub is a python script to improve user experience with HTCondor batch scheduler
