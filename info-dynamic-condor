@@ -106,11 +106,24 @@ class ConsoleView(object):
     """
     @staticmethod
     def display(dynamic_information):
-        print("Cpus: %s" % dynamic_information.cpus)
-        print("Free: %s" % dynamic_information.free)
-        print("Waiting: %s" % dynamic_information.total_waiting())
-        print("Running: %s" % dynamic_information.total_running())
-        print("Per-VO: %s" % dynamic_information.vo)
+        information = dynamic_information.__dict__
+        information['waiting'] = dynamic_information.total_waiting()
+        information['running'] = dynamic_information.total_running()
+        print "######################\n" \
+              "# Global Information #\n" \
+              "######################\n" \
+              "Total CPUs:   {cpus}\n" \
+              "Free CPUS:    {free}\n" \
+              "Waiting Jobs: {waiting}\n" \
+              "Running Jobs: {running}\n" \
+              "".format(**information)
+        for vo in information['vo']:
+            vo_information = information['vo'][vo]
+            vo_information['name'] = vo
+            print "    * {name}\n" \
+                  "    Waiting Jobs: {waiting}\n" \
+                  "    Running Jobs: {running}\n" \
+                  "".format(**vo_information)
 
 
 class Glue1View(object):
@@ -143,10 +156,10 @@ class Glue2View(object):
     @staticmethod
     def display(dynamic_information, glue2_ldif):
         # TODO: Make a per-vo output instead of global output
-        options = dynamic_information.__dict__
-        options['waiting'] = dynamic_information.total_waiting()
-        options['max_total'] = dynamic_information.max_waiting + dynamic_information.cpus
-        options['current_date'] = datetime.datetime.now().isoformat()
+        information = dynamic_information.__dict__
+        information['waiting'] = dynamic_information.total_waiting()
+        information['max_total'] = dynamic_information.max_waiting + dynamic_information.cpus
+        information['current_date'] = datetime.datetime.now().isoformat()
         file = open(glue2_ldif, "r")
         for line in file:
             if line.startswith('dn: GLUE2ShareID'):
@@ -164,7 +177,7 @@ class Glue2View(object):
                              "GLUE2ComputingShareMaxSlotsPerJob: {max_slot_per_job}\n" \
                              "GLUE2ComputingShareMaxMainMemory: {max_memory}\n" \
                              "GLUE2ComputingShareMaxVirtualMemory: {max_virtual_memory}" \
-                             "".format(**options)
+                             "".format(**information)
         file.close()
 
 
@@ -177,9 +190,14 @@ def main():
     ###################
     parser = argparse.ArgumentParser(description="info-dynamic-condor return a GLUE1 / GLUE2 output"
                                                  "of condor scheduler state")
-    parser.add_argument('--scheduler', dest='scheduler', help='Address of scheduler')
-    parser.add_argument('--glue1-ldif', dest='glue1_ldif', help='Path to GLUE1 ldif file')
-    parser.add_argument('--glue2-ldif', dest='glue2_ldif', help='Path to GLUE2 ldif file')
+    parser.add_argument('--scheduler', dest='scheduler',
+                        help='Address of scheduler')
+    parser.add_argument('--glue1-ldif', dest='glue1_ldif',
+                        help='Path to GLUE1 ldif file')
+    parser.add_argument('--glue2-ldif', dest='glue2_ldif',
+                        help='Path to GLUE2 ldif file')
+    parser.add_argument('--console', dest='console', action='store_true',
+                        help='Display Information w/ Human Reading output', default=False)
     options = parser.parse_args()
 
     ##############################################
@@ -191,8 +209,9 @@ def main():
     #######################
     # Display information #
     #######################
-    # print "ConsoleView"
-    # ConsoleView.display(dynamic_information)
+    # print "ConsoleView"`
+    if options.console:
+        ConsoleView.display(dynamic_information)
     if options.glue1_ldif is not None:
         Glue1View.display(dynamic_information, options.glue1_ldif)
     if options.glue2_ldif is not None:
