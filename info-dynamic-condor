@@ -132,20 +132,20 @@ class Glue1View(object):
     """
     @staticmethod
     def display(dynamic_information, glue1_ldif):
-        file = open(glue1_ldif, "r")
-        for line in file:
+        glue_file = open(glue1_ldif, "r")
+        for line in glue_file:
             if line.startswith('dn: GlueCEUniqueID='):
                 print line + "" \
-                      "GlueCEInfoTotalCPUs: {cpus}\n" \
-                      "GlueCEPolicyAssignedJobSlots: {cpus}\n" \
-                      "GlueCEStateFreeCPUs: {free}\n" \
-                      "GlueCEStateFreeJobSlots: {free}\n" \
-                      "GlueCEPolicyMaxRunningJobs: {cpus}\n" \
-                      "GlueCEPolicyMaxWallClockTime: {max_wall_clock_time}\n" \
-                      "GlueCEPolicyMaxCPUTime: {max_cpu_time}\n" \
-                      "GlueCEStateStatus: {status}\n" \
-                      "GlueCEInfoLRMSVersion: {version}\n" \
-                      "GlueCEInfoLRMSType: {name}".format(**dynamic_information.__dict__)
+                             "GlueCEInfoTotalCPUs: {cpus}\n" \
+                             "GlueCEPolicyAssignedJobSlots: {cpus}\n" \
+                             "GlueCEStateFreeCPUs: {free}\n" \
+                             "GlueCEStateFreeJobSlots: {free}\n" \
+                             "GlueCEPolicyMaxRunningJobs: {cpus}\n" \
+                             "GlueCEPolicyMaxWallClockTime: {max_wall_clock_time}\n" \
+                             "GlueCEPolicyMaxCPUTime: {max_cpu_time}\n" \
+                             "GlueCEStateStatus: {status}\n" \
+                             "GlueCEInfoLRMSVersion: {version}\n" \
+                             "GlueCEInfoLRMSType: {name}".format(**dynamic_information.__dict__)
         file.close()
 
 
