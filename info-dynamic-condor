@@ -146,6 +146,9 @@ class Glue1View(object):
                              "GlueCEStateStatus: {status}\n" \
                              "GlueCEInfoLRMSVersion: {version}\n" \
                              "GlueCEInfoLRMSType: {name}".format(**dynamic_information.__dict__)
+            if line.startswith('dn: GlueVOViewLocalID='):
+                # TODO: Add a per-vo output (VOView)
+                pass
         file.close()
 
 
@@ -160,8 +163,8 @@ class Glue2View(object):
         information['waiting'] = dynamic_information.total_waiting()
         information['max_total'] = dynamic_information.max_waiting + dynamic_information.cpus
         information['current_date'] = datetime.datetime.now().isoformat()
-        file = open(glue2_ldif, "r")
-        for line in file:
+        glue_file = open(glue2_ldif, "r")
+        for line in glue_file:
             if line.startswith('dn: GLUE2ShareID'):
                 print line + "" \
                              "GLUE2ComputingShareFreeSlots: {free}\n" \
