@@ -1,0 +1,10 @@
+addons:
+  sonarqube:
+    organization: "guillaume-philippon-github"
+    token:
+      secure: "fR5E631LMTUaoHNX1d+vpN1dX9DJWGjNm4Vju7TCvtjn5egoAIr0nYMVd+bdaym4CWQbFuYCEgkjasGCoIdbBFdcCpfRgIcAGjPTpLSfF4DrP860qYNAVr4M7PWp+EIzJvRx6TwpM7tsbyKBarY6buHyMDyUvHOuSyVZyH2TKPbj+OiW7+RDyb5VPtK06Peu1xpc2JlOq5JOvY9TfhrI4U+c4LHCeuVzumeDpGjVmMy2KFp9Z0U8YHG7J+n5L4aC3QxraTLyZv597qmu4WSi0DMlyc16NH9JSzCYCUhdD8WRqL/fvlpo3SHmK+lKNW5bRvUukfwwLG/XQWTMh3DaCMXWfLKPdzPSXc4u5Dajss7R7/dNhvLGtHWju02/jjoUl/kaA5FCFWNlpTK82gYI2EG9hvztB5d+rpR0aX3Jlmnv352rDHYnwNp96BGzypUxWUj2lIHgqIWONpeRme/RLhWELlFxb1I/EVMyQk5ae6xN80kq0hAh3+YZZDZsKb9MYX39IdhozoQgDSaRTaAkO0v8AKetgKTdGoBD4H/11ILm2am7VIYfQjccK01rX1e8L4EFcSRyB0PMoodrp12Zsnl2ryTqQzbZjoyYVmUz0vpFaynBv7Bx0PUQ1A4IZOj+bcmrYNvPwIMK66XlnKnlL+ibXPukApvpairq8PIIAEs="
+    branches:
+      - master
+
+script:
+  - sonar-scanner
