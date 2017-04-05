@@ -29,3 +29,6 @@ All options are available with the command --help
       --output OUTPUT_FILES
                             A list of output file
       --cpus CPUS           Number of CPUs you need
+
+## info-dynamic-condor
+It s a GLUE1 / GLUE2 output for HTCondor LRMS on grid site
